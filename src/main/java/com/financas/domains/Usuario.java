@@ -1,4 +1,4 @@
 package com.financas.domains;
 
-public class Usario {
+public class Usuario {
 }
