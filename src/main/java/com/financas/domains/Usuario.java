@@ -8,7 +8,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name="usuario")
-public class Usuario {
+public class Usuario extends Pessoa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_usuario")
