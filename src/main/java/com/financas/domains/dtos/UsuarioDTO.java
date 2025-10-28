@@ -4,20 +4,23 @@ import com.financas.domains.Usuario;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.Objects;
+
 public class UsuarioDTO {
 
     private int idUsuario;
 
-    @NotBlank(message = "O campo Razão Social não pode ser nulo")
-    @NotNull(message = "O campo Razão Social não pode estar vazio")
+    @NotNull(message = "O campo razaoSocial não pode ser nulo")
+    @NotBlank(message = "O campo razaoSocial não pode estar vazio")
     private String razaoSocial;
 
     public UsuarioDTO() {
     }
 
-    public UsuarioDTO(Usuario usuario) {
-        this.idUsuario = usuario.getIdUsuario();
-        this.razaoSocial = usuario.getRazaoSocial();
+    public UsuarioDTO(Usuario u) {
+        // compatível com o método auxiliar getIdUsuario() na entidade
+        this.idUsuario = u.getIdUsuario();
+        this.razaoSocial = u.getRazaoSocial();
     }
 
     public int getIdUsuario() {
@@ -32,7 +35,20 @@ public class UsuarioDTO {
         return razaoSocial;
     }
 
-    public void setRazaoSocial(String razaoSocial) {
+    public void setRazaoSocial(@NotNull @NotBlank String razaoSocial) {
         this.razaoSocial = razaoSocial;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UsuarioDTO that)) return false;
+        return idUsuario == that.idUsuario &&
+                Objects.equals(razaoSocial, that.razaoSocial);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idUsuario, razaoSocial);
     }
 }

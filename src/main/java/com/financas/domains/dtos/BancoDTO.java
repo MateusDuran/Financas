@@ -2,37 +2,34 @@ package com.financas.domains.dtos;
 
 import com.financas.domains.Banco;
 import com.financas.domains.enums.TipoConta;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.JoinColumn;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class BancoDTO {
 
     private int idConta;
 
-    @NotBlank(message = "O campo nome não pode ser nulo")
-    @NotNull(message = "O campo nome não pode estar vazio")
+    @NotNull(message = "O campo nome não pode ser nulo")
+    @NotBlank(message = "O campo nome não pode estar vazio")
     private String nome;
 
-    @NotBlank(message = "O campo nome não pode ser nulo")
-    @NotNull(message = "O campo nome não pode estar vazio")
+    @NotNull(message = "O campo descricao não pode ser nulo")
+    @NotBlank(message = "O campo descricao não pode estar vazio")
     private String descricao;
 
-    @Enumerated(EnumType.ORDINAL)
-    @JoinColumn(name="tipoConta")
+    @NotNull(message = "O campo tipoConta não pode ser nulo")
     private TipoConta tipoConta;
 
-    @NotBlank(message = "O campo agencia não pode ser nulo")
-    @NotNull(message = "O campo agencia não pode estar vazio")
+    @NotNull(message = "O campo agencia não pode ser nulo")
+    @NotBlank(message = "O campo agencia não pode estar vazio")
     private String agencia;
 
-    @NotBlank(message = "O campo numero não pode ser nulo")
-    @NotNull(message = "O campo numero não pode estar vazio")
+    @NotNull(message = "O campo numero não pode ser nulo")
+    @NotBlank(message = "O campo numero não pode estar vazio")
     private String numero;
 
     private double limite;
@@ -41,10 +38,7 @@ public class BancoDTO {
     @Digits(integer = 15, fraction = 2)
     private BigDecimal saldo;
 
-
-    public BancoDTO() {
-    }
-
+    public BancoDTO() {}
 
     public BancoDTO(Banco banco) {
         this.idConta = banco.getIdConta();
@@ -57,68 +51,45 @@ public class BancoDTO {
         this.saldo = banco.getSaldo();
     }
 
+    public int getIdConta() { return idConta; }
+    public void setIdConta(int idConta) { this.idConta = idConta; }
 
-    public int getIdConta() {
-        return idConta;
+    public String getNome() { return nome; }
+    public void setNome(String nome) { this.nome = nome; }
+
+    public String getDescricao() { return descricao; }
+    public void setDescricao(String descricao) { this.descricao = descricao; }
+
+    public TipoConta getTipoConta() { return tipoConta; }
+    public void setTipoConta(TipoConta tipoConta) { this.tipoConta = tipoConta; }
+
+    public String getAgencia() { return agencia; }
+    public void setAgencia(String agencia) { this.agencia = agencia; }
+
+    public String getNumero() { return numero; }
+    public void setNumero(String numero) { this.numero = numero; }
+
+    public double getLimite() { return limite; }
+    public void setLimite(double limite) { this.limite = limite; }
+
+    public BigDecimal getSaldo() { return saldo; }
+    public void setSaldo(BigDecimal saldo) { this.saldo = saldo; }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof BancoDTO bancoDTO)) return false;
+        return idConta == bancoDTO.idConta &&
+                Objects.equals(nome, bancoDTO.nome) &&
+                Objects.equals(descricao, bancoDTO.descricao) &&
+                tipoConta == bancoDTO.tipoConta &&
+                Objects.equals(agencia, bancoDTO.agencia) &&
+                Objects.equals(numero, bancoDTO.numero) &&
+                Objects.equals(saldo, bancoDTO.saldo);
     }
 
-    public void setIdConta(int idConta) {
-        this.idConta = idConta;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public TipoConta getTipoConta() {
-        return tipoConta;
-    }
-
-    public void setTipoConta(TipoConta tipoConta) {
-        this.tipoConta = tipoConta;
-    }
-
-    public String getAgencia() {
-        return agencia;
-    }
-
-    public void setAgencia(String agencia) {
-        this.agencia = agencia;
-    }
-
-    public String getNumero() {
-        return numero;
-    }
-
-    public void setNumero(String numero) {
-        this.numero = numero;
-    }
-
-    public double getLimite() {
-        return limite;
-    }
-
-    public void setLimite(double limite) {
-        this.limite = limite;
-    }
-
-    public BigDecimal getSaldo() {
-        return saldo;
-    }
-
-    public void setSaldo(BigDecimal saldo) {
-        this.saldo = saldo;
+    @Override
+    public int hashCode() {
+        return Objects.hash(idConta, nome, descricao, tipoConta, agencia, numero, saldo);
     }
 }
