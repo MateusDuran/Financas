@@ -2,15 +2,13 @@ package com.financas.domains.dtos;
 
 import com.financas.domains.Usuario;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
-import java.util.Objects;
+import java.time.LocalDate;
 
-public class UsuarioDTO {
+public class UsuarioDTO extends PessoaDTO {
 
     private int idUsuario;
 
-    @NotNull(message = "O campo razaoSocial não pode ser nulo")
     @NotBlank(message = "O campo razaoSocial não pode estar vazio")
     private String razaoSocial;
 
@@ -18,7 +16,7 @@ public class UsuarioDTO {
     }
 
     public UsuarioDTO(Usuario u) {
-        // compatível com o método auxiliar getIdUsuario() na entidade
+        super(u); // chama o construtor da PessoaDTO
         this.idUsuario = u.getIdUsuario();
         this.razaoSocial = u.getRazaoSocial();
     }
@@ -35,20 +33,7 @@ public class UsuarioDTO {
         return razaoSocial;
     }
 
-    public void setRazaoSocial(@NotNull @NotBlank String razaoSocial) {
+    public void setRazaoSocial(String razaoSocial) {
         this.razaoSocial = razaoSocial;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof UsuarioDTO that)) return false;
-        return idUsuario == that.idUsuario &&
-                Objects.equals(razaoSocial, that.razaoSocial);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(idUsuario, razaoSocial);
     }
 }
